@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.models import User
 from .models import *
 
 # Create your views here.
@@ -68,3 +69,35 @@ def update_recipe(request, id):
 
 
     return render(request , "update_recipe.html" , data)
+
+
+def login(request):
+    return render(request, "login.html")
+
+def register(request):
+    if request.method == 'POST':
+        
+        first_name = request.POST.get('first_name')
+        print(first_name)
+        last_name = request.POST.get('last_name')
+        print(last_name)
+        username = request.POST.get('username')
+        print(username)
+        password = request.POST.get('password')
+
+
+  
+    
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username
+
+        )
+        user.set_password(password)
+        user.save()    
+   
+
+        
+
+    return render(request, "register.html")

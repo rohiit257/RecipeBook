@@ -13,13 +13,22 @@
             {%csrf_token%}
             <h2>Log In</h2>
             <hr>
+            {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+
+              </div>
+            
+            {% endif %}
             <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input  required type="name" class="form-control">
+                <input  required type="name" name='username' class="form-control">
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input required type="Password" class="form-control">
+                <input required type="Password" name='password' class="form-control">
 
             </div>
             <span>dont have an account? <a href="/register/">Register</a></span>

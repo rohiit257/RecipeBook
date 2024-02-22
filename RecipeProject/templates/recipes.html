@@ -1,72 +1,104 @@
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    
     <div class="container mt-5 card p-3 shadow-lg">
-        <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <h2>Add Recipe</h2>
-            <hr>
-            <div class="mb-3">
-                <label class="form-label">Recipe Name</label>
-                <input name="recipe_name" required type="text" class="form-control">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Recipe Description</label>
-                <textarea name="recipe_desc" required class="form-control"></textarea>
-            </div>
-            <div class="mb-3 p-0 form-check">
-                <label class="form-label">Recipe Image</label>
-                <input type="file" class="form-control" aria-label="file example" name="recipe_img" required>
-            </div>
-            <button type="submit" class="btn btn-success">Add Recipe</button>
-        </form>
-       
+      <nav class="navbar bg-white">
+        <div class="container-fluid">
+          <a class="navbar-brand"><h3>Welcome,{{request.user.first_name}}</h3></a>
+          <form class="d-flex" role="search">
+            <a href="/login/" class="btn btn-outline-success" type="submit">Logout</a>
+          </form>
+        </div>
+      </nav>
+      <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <h2>Add Recipe</h2>
+        <hr />
+        <div class="mb-3">
+          <label class="form-label">Recipe Name</label>
+          <input name="recipe_name" required type="text" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Recipe Description</label>
+          <textarea name="recipe_desc" required class="form-control"></textarea>
+        </div>
+        <div class="mb-3 p-0 form-check">
+          <label class="form-label">Recipe Image</label>
+          <input
+            type="file"
+            class="form-control"
+            aria-label="file example"
+            name="recipe_img"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success">Add Recipe</button>
+      </form>
     </div>
     <div class="container card my-3 shadow-lg p-3">
-        <table class="table table-bordered">
-            <form class="form-inline my-2 my-lg-0">
-                <input name="search" class="form-control mr-sm-2 my-3" type="search" placeholder="Search" aria-label="Search">
-                {% comment %} <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> {% endcomment %}
-              </form>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Recipe Image</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                {% for recipe in recipe %}
-              <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td>
-                    <img src="/static/{{recipe.recipe_img}}" style="height: 100px;">
-                </td>
-                <td>{{recipe.recipe_name}}</td>
-                <td>{{recipe.recipe_desc}}</td>
-                <td>
-                    <a href="/delete_recipe/{{recipe.id}}" class="btn btn-danger">Delete</a>
-                    <a href="/update_recipe/{{recipe.id}}" class="btn btn-primary my-2">Update</a>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+      <table class="table table-hover">
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            name="search"
+            class="form-control mr-sm-2 my-3"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          {% comment %}
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+          {% endcomment %}
+        </form>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Recipe Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          {% for recipe in recipe %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>
+              <img src="/static/{{recipe.recipe_img}}" style="height: 100px" />
+            </td>
+            <td>{{recipe.recipe_name}}</td>
+            <td>{{recipe.recipe_desc}}</td>
+            <td>
+              <a href="/delete_recipe/{{recipe.id}}" class="btn btn-danger"
+                >Delete</a
+              >
+              <a
+                href="/update_recipe/{{recipe.id}}"
+                class="btn btn-primary my-2"
+                >Update</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

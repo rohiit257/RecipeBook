@@ -121,7 +121,7 @@ def register(request):
             username = username
 
         )
-        print(password)
+        
         user.set_password(password)
         user.save()    
 
